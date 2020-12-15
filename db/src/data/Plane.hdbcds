@@ -1,0 +1,24 @@
+using CWTypes.BaseT;
+using CWTypes.myChangeT;
+
+//Plane Details
+entity Plane 
+{
+    key REGNO      : Integer;			//Registration Number 
+        MODEL      : type of BaseT.ModelT; //Model Name 
+        MAKE       : String(20);		//Manufacturer 
+        TYPE       : String(20);		//Type of Aircraft 
+        YEAR       : Integer;			//Year of Manufacture 
+        REGDATE	   : LocalDate; 		//Registration Date 
+        MAXSEAT    : Integer;			//Maximum Seating Capacity 
+        ECOSEAT    : Integer;			//No of Economy Class Seats 
+        BUSSEAT    : Integer;			//No of Business Class Seats 
+        FIRSEAT    : Integer;			//No of First Class Seats 
+		CHANGE	   : myChangeT;     //Last Change Timestamp and User        
+}
+technical configuration {
+    column store;		//Column Table
+    auto merge;			//Enable auto merge
+    unload priority 5;  //Standard settings
+    group type app group subtype FlightSystem group name master;
+};

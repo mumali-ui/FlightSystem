@@ -1,0 +1,16 @@
+/* Reference to external structures*/
+using CWTypes.myChangeT;
+
+//Price Calendar
+entity PriceCalendar {
+    key CDATE  : LocalDate; //Date
+        RATE   : String(10); //Standard or Peak Rate for Pricing
+        SEASON : String(20); //Season used for Pricing
+        CHANGE : myChangeT; //Last Change Timestamp and User
+}
+technical configuration {
+    column store; //Column Table
+    auto merge; //Enable auto merge
+    unload priority 5; //Standard settings
+    group type app group subtype FlightSystem group name master;
+};

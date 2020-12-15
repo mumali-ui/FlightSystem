@@ -1,0 +1,15 @@
+Entity M_TIME_DIMENSION_WEEK{
+	 key YEAR : String(4) not null;
+	 HALFYEAR : String(2);
+	 QUARTER : String(2);
+	 MONTH : String(2);
+	 key WEEK : String(2) not null;
+	 CALQUARTER : String(5);
+	 CALMONTH : String(6);
+	 CALWEEK : String(6);
+	 YEAR_INT : Integer;
+	 HALFYEAR_INT : Integer;
+	 QUARTER_INT : Integer;
+	 MONTH_INT : Integer;
+	 WEEK_INT : Integer;
+};

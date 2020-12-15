@@ -1,0 +1,21 @@
+/* Reference to external structures*/
+using CWTypes.BaseT;
+using CWTypes.myChangeT;
+
+//Customer Details
+entity Customer {
+    key CUSTID  : Integer; //Customer ID
+        FNAME   : type of BaseT.NameT; //First Name
+        LNAME   : type of BaseT.NameT; //Last Name
+        MOBILE  : type of BaseT.PhoneT; //Mobile/Cell Number
+        EMAIL   : type of BaseT.EmailT; //Email
+        COUNTRY : type of BaseT.CountryT; //Country of Residence
+        FLYERID : String(20); //Frequent Flyer ID
+        CHANGE  : myChangeT; //Last Change Timestamp and User
+}
+technical configuration {
+    column store; //Column Table
+    auto merge; //Enable auto merge
+    unload priority 5; //Standard settings
+    group type app group subtype FlightSystem group name master;
+};

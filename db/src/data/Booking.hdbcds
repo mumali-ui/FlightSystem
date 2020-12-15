@@ -1,0 +1,85 @@
+/*Reference to external service */
+using CWTypes.BaseT;
+using CWTypes.myChangeT;
+using Flight;
+using Seat;
+using Customer;
+
+//Booking Details
+entity Booking {
+    key FLIGHT    : type of BaseT.FlightT; //Flight Number
+    key FDATE     : LocalDate; //Flight Date
+    key MODEL     : type of BaseT.ModelT; //Plane Model
+    key SEAT      : type of BaseT.SeatT; //Seat Number
+        CUSTID    : Integer; //Customer ID
+        STDPRICE  : type of BaseT.PriceT; //Base Price
+        BOOKPRICE : type of BaseT.PriceT; //Book Price
+        FEES      : type of BaseT.PriceT; //Surcharges/Fees
+        DISCOUNT  : type of BaseT.PriceT; //Discount
+        TAX       : type of BaseT.PriceT; //Tax
+        TOTAL     : type of BaseT.PriceT; //Total Amount Charged
+        PAYMENT   : String(15); //Mode of Payment CREDIT, CASH, POINTS
+        STATUS    : String(10); //Booking Status Hold/Confirmed/Available
+        PASSENGER : String(20); //Name of the Passnger
+        CHECKIN   : String(1); //Check-in Status
+        CHANGE    : myChangeT; //Last Change Timestamp and User
+        // Associations
+        _Flight   : association[*, 0..1] to Flight {
+                                                     FLIGHT,
+                                                     FDATE
+                                                   };
+        _Seat     : association[*, 0..1] to Seat {
+                                                   MODEL,
+                                                   SEAT
+                                                 };
+        _Customer : association[*, 0..1] to Customer { CUSTID };
+}
+technical configuration {
+    column store; //Column Table
+    auto merge; //Enable auto merge
+    unload priority 5; //Standard settings
+    group type app group subtype FlightSystem group name transaction;
+};
+
+
+//Create SQL View
+view OpenSeats as
+    select from Booking
+    {
+        FLIGHT,
+        FDATE,
+        count(SEAT) as TOTAL_SEATS
+    }
+    where
+        STATUS = 'AVAILABLE'
+    group by
+        FLIGHT,
+        FDATE
+    having
+        count(SEAT) > 2
+    order by
+        FLIGHT asc,
+        FDATE desc;
+
+//Create Table Function
+view OpenSeats2
+    with parameters
+        P_DATE : LocalDate
+as
+    select from Booking
+    {
+        FLIGHT,
+        FDATE,
+        count(SEAT) as TOTAL_SEATS
+    }
+    where
+            STATUS = 'AVAILABLE'
+        and FDATE  = :P_DATE
+    group by
+        FLIGHT,
+        FDATE
+    having
+        count(SEAT) > 2
+    order by
+        FLIGHT asc,
+        FDATE desc;

@@ -1,0 +1,18 @@
+/* Reference to external structures*/
+using CWTypes.BaseT;
+using CWTypes.myChangeT;
+
+//Seat Details
+entity Seat {
+    key MODEL  : type of BaseT.ModelT; //Plane Model
+    key SEAT   : type of BaseT.SeatT; //Seat Number
+        CLASS  : String(10); //Class of Seat: Economy, Business
+        STYPE  : String(15); //Type of Seating: Window/Isle
+        CHANGE : myChangeT; //Last Change Timestamp and User
+}
+technical configuration {
+    column store; //Column Table
+    auto merge; //Enable auto merge
+    unload priority 5; //Standard settings
+    group type app group subtype FlightSystem group name master;
+};

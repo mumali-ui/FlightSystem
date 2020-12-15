@@ -1,0 +1,32 @@
+/* Reference to external structures*/
+using CWTypes.BaseT;
+using CWTypes.myChangeT;
+using Airport;
+
+//Connection Details
+entity Connection {
+    key FLIGHT       : type of BaseT.FlightT; //Flight Number
+        FROMAP       : type of BaseT.CodeT; //Origin Airport
+        TOAP         : type of BaseT.CodeT; //Destination Airport
+        DEPT         : LocalTime; //Scheduled Departure Time
+        ARRT         : LocalTime; //Scheduled Arrival Time
+        SSTARTD      : LocalDate; //Service Start Date
+        SENDD        : LocalDate; //Service End Date
+        ESPRICE      : type of BaseT.PriceT; //Economy Class Standard Price
+        EPPRICE      : type of BaseT.PriceT; //Economy Class Peak Price
+        BSPRICE      : type of BaseT.PriceT; //Business Class Standard Price
+        BPPRICE      : type of BaseT.PriceT; //Business Class Peak Price
+        FSPRICE      : type of BaseT.PriceT; //First Class Standard Price
+        FPPRICE      : type of BaseT.PriceT; //First Class Peak Price
+        MILES        : Integer; //Distance in Miles
+        CHANGE       : myChangeT; //Last Change Timestamp and User
+        // Associations
+        _FromAirport : association[*, 0..1] to Airport on _FromAirport.CODE = FROMAP;
+        _ToAirport   : association[*, 0..1] to Airport on _ToAirport.CODE = TOAP;
+}
+technical configuration {
+    column store; //Column Table
+    auto merge; //Enable auto merge
+    unload priority 5; //Standard settings
+    group type app group subtype FlightSystem group name master;
+};

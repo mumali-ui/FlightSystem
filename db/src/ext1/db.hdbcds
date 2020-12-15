@@ -1,0 +1,6 @@
+in package ext1;
+using Airport;
+
+extend entity Airport with {
+    INTERNATIONAL : Boolean;
+}
