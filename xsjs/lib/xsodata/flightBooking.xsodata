@@ -1,0 +1,16 @@
+service { 
+	"Airport" as "Airports"
+	with ("CODE", "NAME", "CITY","COUNTRY","TIMEZONE","LATITUDE", "LONGITUDE");
+	
+	"Connection" as "Connections" with ("FLIGHT", "FROMAP", "TOAP", "DEPT", "ARRT")
+	navigates ("ConectionFromAirport" as "FromAirport", "ConnectionToAirport" as "ToAirport")
+	
+	association "ConnectionFromAirport"
+	principal "Connections"("FROMAP") multiplicity "1"
+	dependent "Airports"("CODE") multiplicity "1";
+	
+	association "ConnectionToAirport"
+	principal "Connections"("TOAP") multiplicity "1"
+	dependent "Airports"("CODE") multiplicity "1";
+}
+

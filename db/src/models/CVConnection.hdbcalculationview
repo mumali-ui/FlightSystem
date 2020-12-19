@@ -346,7 +346,7 @@
     <calculatedAttribute id="CC_DISTANCE" order="20" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Distance in KM"/>
       <keyCalculation datatype="INTEGER" expressionLanguage="SQL">
-        <formula>ST_Distance("FR_LOCATION","TO_LOCATION" , 'Kilometer')</formula>
+        <formula>ST_Distance(&quot;FR_LOCATION&quot;,&quot;TO_LOCATION&quot; , 'Kilometer')</formula>
       </keyCalculation>
       </calculatedAttribute>
   </calculatedAttributes>

@@ -14,24 +14,23 @@ modules:
         properties:
           key: hdi-sys-bi-service
           service: '~{sys-bi-service-name}'
-
   - name: flight_node
     type: nodejs
     path: flight_node
     provides:
-     - name: flight_node_api
-       properties:
-          url: ${default-url}
-
-
+      - name: flight_node_api
+        properties:
+          url: '${default-url}'
   - name: xsjs
     type: nodejs
     path: xsjs
     provides:
-     - name: xsjs_api
-       properties:
-          url: ${default-url}
-
+      - name: xsjs_api
+        properties:
+          url: '${default-url}'
+    requires:
+      - name: hdi_db
+      - name: db
 resources:
   - name: hdi_db
     parameters:
