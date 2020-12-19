@@ -3,15 +3,15 @@ using CWTypes.BaseT;
 using CWTypes.myChangeT;
 
 entity Airport {
-    key CODE      :                    type of BaseT.CodeT;  // Airport IATA Code
-        NAME      :                    String(50); // Airport Name
-        CITY      :                    type of BaseT.CityT; // Airport City
-        COUNTRY   :                    type of BaseT.CountryT            default 'USA'; // Airport Country
-        TIMEZONE  :                    String(3); // Airport Time Zone
-        LATITUDE  :                    Decimal(12, 6)      not null; // Coordinates: Latitude
-        LONGITUDE :                    Decimal(12, 6)      not null; // Coordinates: Longitude
-        LOCATION  : /* Spatial Data */ hana.ST_POINT(4326) = new st_point('POINT (' || LONGITUDE || ' ' || LATITUDE || ')', 4326); //Geo Cordinates: Point 4326
-        CHANGE    :                    myChangeT; // Technical Columns
+    key CODE      : type of BaseT.CodeT; // Airport IATA Code
+        NAME      : String(50); // Airport Name
+        CITY      : type of BaseT.CityT; // Airport City
+        COUNTRY   : type of BaseT.CountryT; // Airport Country
+        TIMEZONE  : String(3); // Airport Time Zone
+        LATITUDE  : Decimal(12, 6) not null; // Coordinates: Latitude
+        LONGITUDE : Decimal(12, 6) not null; // Coordinates: Longitude
+        LOCATION  : hana.ST_POINT(4326); /*Geo Cordinates: Point 4326 */
+        CHANGE    : myChangeT; // Technical Columns
 }
 technical configuration {
     column store; //Column Table
