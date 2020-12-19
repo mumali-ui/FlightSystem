@@ -31,6 +31,17 @@ modules:
     requires:
       - name: hdi_db
       - name: db
+
+  - name: web
+    type: html5
+    path: web
+    requires:
+     - name: xsjs_api
+       group: destinations
+       properties:
+          name: xsjs_be
+          url: ~{url}
+
 resources:
   - name: hdi_db
     parameters:

@@ -1,0 +1,71 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" Version="1.0">
+	<edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="2.0">
+		<Schema xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm"
+			Namespace="default">
+			<EntityType Name="ConnectionsType">
+				<Key>
+					<PropertyRef Name="FLIGHT"/>
+				</Key>
+				<Property Name="FROMAP" Type="Edm.String" MaxLength="3"/>
+				<Property Name="TOAP" Type="Edm.String" MaxLength="3"/>
+				<Property Name="ARRT" Type="Edm.Time"/>
+				<Property Name="DEPT" Type="Edm.Time"/>
+				<Property Name="SENDD" Type="Edm.DateTime"/>
+				<Property Name="SSTARTD" Type="Edm.DateTime"/>
+				<Property Name="BPPRICE" Type="Edm.Decimal" Precision="12" Scale="2"/>
+				<Property Name="BSPRICE" Type="Edm.Decimal" Precision="12" Scale="2"/>
+				<Property Name="EPPRICE" Type="Edm.Decimal" Precision="12" Scale="2"/>
+				<Property Name="ESPRICE" Type="Edm.Decimal" Precision="12" Scale="2"/>
+				<Property Name="FPPRICE" Type="Edm.Decimal" Precision="12" Scale="2"/>
+				<Property Name="FSPRICE" Type="Edm.Decimal" Precision="12" Scale="2"/>
+				<Property Name="MILES" Type="Edm.Int32"/>
+				<Property Name="FR_CITY" Type="Edm.String" MaxLength="20"/>
+				<Property Name="FR_COUNTRY" Type="Edm.String" MaxLength="25"/>
+				<Property Name="TO_CITY" Type="Edm.String" MaxLength="20"/>
+				<Property Name="TO_COUNTRY" Type="Edm.String" MaxLength="25"/>
+				<Property Name="FLIGHT" Type="Edm.String" MaxLength="6"/>
+				<Property Name="CC_DISTANCE" Type="Edm.Int32"/>
+				<NavigationProperty Name="HisFlights" Relationship="default.Connection_flightsType" FromRole="ConnectionsPrincipal"
+					ToRole="FlightsDependent"/>
+			</EntityType>
+			<EntityType Name="FlightsType">
+				<Key>
+					<PropertyRef Name="FLIGHT"/>
+					<PropertyRef Name="FDATE"/>
+				</Key>
+				<Property Name="FLIGHT" Type="Edm.String" MaxLength="6"/>
+				<Property Name="FDATE" Type="Edm.DateTime"/>
+				<Property Name="DEPT" Type="Edm.Time"/>
+				<Property Name="ARRT" Type="Edm.Time"/>
+				<Property Name="STATUS" Type="Edm.String" MaxLength="10"/>
+				<Property Name="PILOT1" Type="Edm.Int32"/>
+				<Property Name="PILOT2" Type="Edm.Int32"/>
+				<Property Name="CREW1" Type="Edm.Int32"/>
+				<Property Name="CREW2" Type="Edm.Int32"/>
+				<Property Name="CREW3" Type="Edm.Int32"/>
+				<Property Name="PLANE" Type="Edm.Int32"/>
+			</EntityType>
+			<Association Name="Connection_flightsType">
+				<End Type="default.ConnectionsType" Role="ConnectionsPrincipal" Multiplicity="1"/>
+				<End Type="default.FlightsType" Role="FlightsDependent" Multiplicity="*"/>
+				<ReferentialConstraint>
+					<Principal Role="ConnectionsPrincipal">
+						<PropertyRef Name="FLIGHT"/>
+					</Principal>
+					<Dependent Role="FlightsDependent">
+						<PropertyRef Name="FLIGHT"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<EntityContainer Name="v2" m:IsDefaultEntityContainer="true">
+				<EntitySet Name="Connections" EntityType="default.ConnectionsType"/>
+				<EntitySet Name="Flights" EntityType="default.FlightsType"/>
+				<AssociationSet Name="Connection_flights" Association="default.Connection_flightsType">
+					<End Role="ConnectionsPrincipal" EntitySet="Connections"/>
+					<End Role="FlightsDependent" EntitySet="Flights"/>
+				</AssociationSet>
+			</EntityContainer>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
